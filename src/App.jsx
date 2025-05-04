@@ -1,13 +1,24 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Clinics from './pages/Clinics';
+import About from './pages/About';
+import FAQ from './pages/FAQ';
+import Services from './pages/Services';
+import Contact from './pages/Contact';
 import Navbar from './components/Navbar';
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-gray-100">
+    <BrowserRouter>
       <Navbar />
-      <main className="p-8">
-        <h2 className="text-2xl font-bold text-blue-600">Scarborough Shift</h2>
-        <p className="mt-2 text-gray-700"> Coming soon! 🎉</p>
-      </main>
-    </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/clinics" element={<Clinics />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
