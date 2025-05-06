@@ -14,7 +14,7 @@ export default {
           lighGray: "#F3F4F6",
           darkGray: "#374151",
           offWhite: "#F9FAFB",
-          navyBlue: "#0A1A3A",
+          navyBlue: "#0A1A4A",
           navyBlueDeep: "#050A30",
         }
       }
