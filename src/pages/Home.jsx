@@ -3,6 +3,10 @@ import CategoryFilter from "../components/CategoryFilter";
 import SearcBar from "../components/SearchBar";
 
 
-export default function Clinics() {
-    return <h1>Home</h1>;
-  }
+export default function Home() {
+  return (
+    <main>
+      <Hero />
+    </main>
+  );
+}
