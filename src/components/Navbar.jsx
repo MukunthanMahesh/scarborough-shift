@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-// 1. Nav link data 
+// Nav link data 
 const NAV_LINKS = [
   { name: "About Us", to: "/about" },
   { name: "FAQ", to: "/faq" },
@@ -9,25 +9,41 @@ const NAV_LINKS = [
   { name: "Contact", to: "/contact" }
 ];
 
-// 2. Link group renderer
-function NavLinks({ className = "" }) {
+// Link group renderer
+function NavLinks({ className = "", currentPath }) {
   return (
-    <ul className={`gap-6 text-sm ${className}`}>
-      {NAV_LINKS.map(({ name, to }) => (
-        <li key={to}>
-          <Link to={to} className="hover:underline">{name}</Link>
-        </li>
-      ))}
+    <ul className={`gap-8 text-sm md:text-base flex ${className}`}>
+      {NAV_LINKS.map(({ name, to }) => {
+        const isActive = currentPath === to;
+
+        return (
+          <li key={to} className="relative">
+            <Link
+              to={to}
+              className="no-underline hover:no-underline relative inline-block"
+            >
+              {name}
+              {/* underline indicator */}
+              <span
+                className={`absolute -bottom-1 left-0 h-[3px] w-full origin-left transform transition-transform duration-300 ${
+                  isActive ? "scale-x-100 bg-brand-offWhite" : "scale-x-0 bg-brand-darkGray"
+                }`}
+              ></span>
+            </Link>
+          </li>
+        );
+      })}
     </ul>
   );
 }
 
-// 3. Buttons renderer (shared for desktop & mobile)
+
+// Buttons renderer
 function ActionButtons({ className = "", fullWidth = false }) {
   const base = fullWidth ? "w-full" : "";
   return (
     <div className={`gap-3 ${className}`}>
-      <button className={`${base} bg-brand-offWhite text-brand-darkGray px-3 py-1 rounded text-sm`}>
+      <button className={`${base} bg-brand-offWhite text-brand-black px-3 py-1 rounded text-sm`}>
         ❤️ Donate to SHN
       </button>
       <button className={`${base} border border-white px-3 py-1 rounded text-sm`}>
@@ -37,22 +53,23 @@ function ActionButtons({ className = "", fullWidth = false }) {
   );
 }
 
-// 4. Main Navbar component
+// Main Navbar component
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
 
   return (
-    <nav className="bg-brand-navyBlueDeep text-brand-offWhite px-4 md:px-6 py-2.5 shadow-md">
+    <nav className="sticky top-0 z-40 bg-brand-navyBlueDeep text-brand-offWhite px-4 md:px-6 py-4 shadow-md">
       <div className="max-w-screen-xl mx-auto flex justify-between items-center">
 
         {/* Logo linking to home */}
         <Link to="/">
-          <img src="logo.png" alt="Scarborough Shift logo" className="w-28 md:w-32 cursor-pointer" />
+          <img src="logo.png" alt="Scarborough Shift logo" className="w-32 md:w-40 cursor-pointer" />
         </Link>
-        
+
         {/* Desktop view */}
         <div className="hidden md:flex items-center gap-6">
-          <NavLinks className="flex" />
+          <NavLinks className="flex" currentPath={location.pathname} />
           <ActionButtons className="flex" />
         </div>
 

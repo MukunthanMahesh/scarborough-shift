@@ -8,6 +8,7 @@ export default {
     extend: {
       colors: {
         brand: {
+          black: "#000000",
           deepBlue: "#1E3A8A",
           skybBlue: "#3B82F6",
           white: "#FFFFFF",
