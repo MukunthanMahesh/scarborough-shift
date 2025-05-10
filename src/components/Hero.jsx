@@ -32,7 +32,7 @@ export default function Hero() {
           </Link>
           <Link
             to="/donate"
-            className="border border-white text-white font-semibold px-6 py-3 rounded hover:bg-white hover:text-black"
+            className="border border-white text-white font-semibold px-6 py-3 rounded hover:bg-pink-200 hover:border-pink-200 hover:text-black"
           >
             ❤️ Donate to SHN
           </Link>
