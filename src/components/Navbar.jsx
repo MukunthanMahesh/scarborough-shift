@@ -43,10 +43,14 @@ function ActionButtons({ className = "", fullWidth = false }) {
   const base = fullWidth ? "w-full" : "";
   return (
     <div className={`gap-3 ${className}`}>
-      <button className={`${base} bg-brand-offWhite text-brand-black px-3 py-1 rounded text-sm`}>
+      <button
+        className={`${base} bg-brand-offWhite text-brand-black px-3 py-1 rounded text-sm transition duration-200 hover:bg-pink-200 hover:shadow-md`}
+      >
         ❤️ Donate to SHN
       </button>
-      <button className={`${base} border border-white px-3 py-1 rounded text-sm`}>
+      <button
+        className={`${base} border border-white px-3 py-1 rounded text-sm transition duration-200 hover:bg-white hover:text-brand-navyBlueDeep`}
+      >
         Sign Up
       </button>
     </div>
