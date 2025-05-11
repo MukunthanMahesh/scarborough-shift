@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
-import Clinics from './pages/Clinics';
+
 import About from './pages/About';
 import FAQ from './pages/FAQ';
 import Services from './pages/Services';
@@ -13,7 +13,6 @@ export default function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/clinics" element={<Clinics />} />
         <Route path="/about" element={<About />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/services" element={<Services />} />
