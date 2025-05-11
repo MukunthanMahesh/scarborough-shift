@@ -43,20 +43,23 @@ function ActionButtons({ className = "", fullWidth = false }) {
   const base = fullWidth ? "w-full" : "";
   return (
     <div className={`gap-3 ${className}`}>
-      <button
+      <a
+        href="https://www.shnfoundation.ca/?form=shn_hospital&utm_source=shn.ca&utm_medium=header_donate&utm_campaign=general"
+        target="_blank"
+        rel="noopener noreferrer"
         className={`${base} bg-brand-offWhite text-brand-black px-3 py-1 rounded text-sm transition duration-200 hover:bg-pink-200 hover:shadow-md`}
       >
         ❤️ Donate to SHN
-      </button>
-      <button
+      </a>
+      <a
+        href="/signup" ////////////////////// MAKE A SIGNUP PAGE
         className={`${base} border border-white px-3 py-1 rounded text-sm transition duration-200 hover:bg-white hover:text-brand-navyBlueDeep`}
       >
         Sign Up
-      </button>
+      </a>
     </div>
   );
 }
-
 // Main Navbar component
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);

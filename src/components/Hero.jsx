@@ -25,12 +25,14 @@ export default function Hero() {
             </Link>
 
             {/* Secondary CTA */}
-            <Link
-              to="/donate"
-              className="bg-white border border-brand-navyBlueDeep text-brand-navyBlueDeep font-semibold px-6 py-3 rounded hover:bg-pink-200"
-            >
+              <a
+                href="https://www.shnfoundation.ca/?form=shn_hospital&utm_source=shn.ca&utm_medium=header_donate&utm_campaign=general"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white border border-brand-navyBlueDeep text-brand-navyBlueDeep font-semibold px-6 py-3 rounded hover:bg-pink-200 transition hover:border-pink-200"
+              >
               ❤️ Donate to SHN
-            </Link>
+            </a>
           </div>
         </div>
 
