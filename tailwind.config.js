@@ -6,13 +6,17 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Roboto", "ui-sans-serif", "system-ui"],
+        slab: ["Roboto Slab", "serif"]
+      },
       colors: {
         brand: {
           black: "#000000",
           deepBlue: "#1E3A8A",
-          skybBlue: "#3B82F6",
+          skyBlue: "#3B82F6",
           white: "#FFFFFF",
-          lighGray: "#F3F4F6",
+          lightGray: "#F3F4F6",
           darkGray: "#374151",
           offWhite: "#F9FAFB",
           navyBlue: "#0A1A4A",

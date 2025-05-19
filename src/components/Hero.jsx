@@ -7,7 +7,7 @@ export default function Hero() {
 
         {/* Right: Text Content */}
         <div className="w-full md:w-1/2 text-center md:text-left">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-slab font-bold mb-6 leading-tight">
             Empowering Scarborough’s Health
           </h1>
 
