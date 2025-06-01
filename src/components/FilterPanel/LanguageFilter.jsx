@@ -16,6 +16,7 @@ export default function LanguageFilter({ language, onChange }) {
         <option>Hindi</option>
         <option>Tamil</option>
         <option>Urdu</option>
+        <option>Arabic</option>
       </select>
     </div>
   );
