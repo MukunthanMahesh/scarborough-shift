@@ -2,9 +2,9 @@
 import React from "react";
 
 const SERVICES = [
-  "Vaccine", "Walk-In", "X-Ray", "Blood Work", "Food Bank",
+  "Hospitals", "Vaccine", "Walk-In", "X-Ray", "Blood Work", "Food Bank",
   "Pharmacies", "Dental Clinics", "Pregnancy Health",
-  "Physiotherapy", "Hospitals",
+  "Physiotherapy", 
 ];
 
 export default function ServiceTypeSelector({ selected, onSelect }) {

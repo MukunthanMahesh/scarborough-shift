@@ -5,6 +5,7 @@ import LanguageFilter from "./LanguageFilter";
 import ServiceTypeSelector from "./ServiceTypeSelector";
 
 export default function FilterPanel({ filters, setFilters }) {
+
   const updateFilter = (key, value) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
@@ -20,6 +21,13 @@ export default function FilterPanel({ filters, setFilters }) {
       };
     });
   };
+
+  // Ensure serviceType is set to default "Hospitals" on mount
+  React.useEffect(() => {
+    if (!filters.serviceType) {
+      setFilters((prev) => ({ ...prev, serviceType: "Hospitals" }));
+    }
+  }, []);
 
   const { serviceType } = filters;
 
