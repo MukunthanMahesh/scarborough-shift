@@ -42,7 +42,7 @@ export default function FilterPanel({ filters, setFilters }) {
   ];
 
   return (
-    <div className="sm:p-6 md:p-8 max-w-full bg-brand-white rounded-lg shadow-md">
+    <div className="p-4 sm:p-6 md:p-8 space-y-6 max-w-full bg-brand-white rounded-lg shadow-md">
       {/* Service Type Selector */}
       <ServiceTypeSelector
         selected={filters.serviceType}
