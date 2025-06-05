@@ -3,6 +3,7 @@ import AvailabilityFilter from "./AvailabilityFilter";
 import DistanceFilter from "./DistanceFilter";
 import LanguageFilter from "./LanguageFilter";
 import ServiceTypeSelector from "./ServiceTypeSelector";
+import serviceFilterConfig from "../../config/serviceFilterConfig";
 
 export default function FilterPanel({ filters, setFilters }) {
 
@@ -30,16 +31,7 @@ export default function FilterPanel({ filters, setFilters }) {
   }, []);
 
   const { serviceType } = filters;
-
-  // Only show availability/language filters for these types
-  const serviceTypesWithAvailability = [
-    "Vaccine", "Walk-In", "X-Ray", "Blood Work", "Food Bank",
-    "Pharmacies", "Dental Clinics", "Pregnancy Health", "Physiotherapy", "Hospitals"
-  ];
-
-  const serviceTypesWithLanguage = [
-    "Hospitals", "Dental Clinics", "Pregnancy Health", "Physiotherapy"
-  ];
+  const config = serviceFilterConfig[serviceType] || {};
 
   return (
     <div className="p-4 sm:p-6 md:p-8 space-y-6 max-w-full bg-brand-white rounded-lg shadow-md">
@@ -55,16 +47,15 @@ export default function FilterPanel({ filters, setFilters }) {
         onChange={(value) => updateFilter("distance", value)}
       />
 
-      {/* Conditionally show AvailabilityFilter */}
-      {serviceTypesWithAvailability.includes(serviceType) && (
+      {/* Conditional filters based on config */}
+      {config.availability && (
         <AvailabilityFilter
           selectedKeys={filters.availability || []}
           onToggle={toggleAvailability}
         />
       )}
 
-      {/* Conditionally show LanguageFilter */}
-      {serviceTypesWithLanguage.includes(serviceType) && (
+      {config.language && (
         <LanguageFilter
           language={filters.language}
           onChange={(value) => updateFilter("language", value)}
