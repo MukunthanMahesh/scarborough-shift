@@ -8,7 +8,7 @@ export default function LanguageFilter({ language, onChange }) {
       <select
         value={language || "English"}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full border rounded p-1"
+        className="w-full border rounded p-1 bg-brand-white text-brand-black focus:outline-none focus:ring-2 focus:ring-offset-brand-skyBlue transition-colors duration-150"
       >
         <option>English</option>
         <option>French</option>
