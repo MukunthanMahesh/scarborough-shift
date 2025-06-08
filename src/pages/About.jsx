@@ -12,11 +12,11 @@ export default function About() {
       <section className="py-20 bg-white text-brand-darkGray">
         <div className="md:flex md:items-center md:gap-12">
           <div className="md:w-1/2 mb-8 md:mb-0">
-            <h2 className="text-4xl font-slab font-bold text-brand-deepBlue mb-4">Our Mission</h2>
-            <p className="text-lg">Mission Mission Mission!</p>
+            <h2 className="text-4xl font-slab font-bold text-brand-deepBlue mb-4 pl-11">Our Mission</h2>
+            <p className="text-lg pl-11">Mission Mission Mission!</p>
           </div>
           <div className="md:w-1/2">
-            <img src="/ourMission.jpg" alt="Our Mission" className="rounded-xl max-w-full w-64 sm:w-80 md:w-96 shadow-md" />
+            <img src="clinic.png" alt="Our Mission" className="rounded-xl max-w-full w-64 sm:w-80 md:w-96" />
           </div>
         </div>
       </section>
@@ -29,7 +29,7 @@ export default function About() {
             <p className="text-lg">Our Names!</p>
           </div>
           <div className="md:w-1/2">
-            <img src="/howItStarted.jpg" alt="How It Started" className="rounded-xl max-w-full w-64 sm:w-80 md:w-96 shadow-md" />
+            <img src="talking.png" alt="How It Started" className="rounded-xl max-w-full w-64 sm:w-80 md:w-96" />
           </div>
         </div>
       </section>
@@ -38,8 +38,8 @@ export default function About() {
       <section className="py-20 bg-white text-brand-darkGray">
         <div className="md:flex md:items-center md:gap-12">
           <div className="md:w-1/2 mb-8 md:mb-0">
-            <h2 className="text-4xl font-slab font-bold text-brand-deepBlue mb-4">Who It's For</h2>
-            <p className="text-lg">For Scarborough!</p>
+            <h2 className="text-4xl font-slab font-bold text-brand-deepBlue mb-4 pl-11">Who It's For</h2>
+            <p className="text-lg pl-11">For Scarborough!</p>
           </div>
           <div className="md:w-1/2">
             <img src="/whosItFor.jpg" alt="Who It's For" className="rounded-xl max-w-full w-64 sm:w-80 md:w-96 shadow-md" />
@@ -64,8 +64,8 @@ export default function About() {
       <section className="py-20 bg-white text-brand-darkGray">
         <div className="md:flex md:items-center md:gap-12">
           <div className="md:w-1/2 mb-8 md:mb-0">
-            <h2 className="text-4xl font-slab font-bold text-brand-deepBlue mb-4">What Makes Us Different</h2>
-            <p className="text-lg">We care. a lot.</p>
+            <h2 className="text-4xl font-slab font-bold text-brand-deepBlue mb-4 pl-11">What Makes Us Different</h2>
+            <p className="text-lg pl-11">We care. a lot.</p>
           </div>
           <div className="md:w-1/2">
             <img src="/whyWeBuiltIt.jpg" alt="What Makes Us Different" className="rounded-xl max-w-full w-64 sm:w-80 md:w-96 shadow-md" />
