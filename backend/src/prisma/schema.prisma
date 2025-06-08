@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Location {
+  location_id        String   @id
+  name               String
+  address            String
+  phone              String?
+  appointment_needed Boolean
+  walk_in            Boolean
+  vaccine_available  Boolean
+  xray_available     Boolean
+
+  hours      Hour[]
+  services   Service[]
+  languages  LocationLanguage[]
+  issues     Issue[]
+}
+
+model Hour {
+  hours_id    String   @id
+  location_id String
+  day_of_week Int
+  open_time   String
+  close_time  String
+
+  location Location @relation(fields: [location_id], references: [location_id])
+}
+
+model Service {
+  service_id   String @id
+  location_id  String
+  service_name String
+  description  String?
+
+  location Location @relation(fields: [location_id], references: [location_id])
+}
+
+model Language {
+  language_id   String @id
+  language_name String
+
+  locations LocationLanguage[]
+}
+
+model LocationLanguage {
+  location_id String
+  language_id String
+
+  location Location @relation(fields: [location_id], references: [language_id])
+  language Language @relation(fields: [language_id], references: [language_id])
+
+  @@id([location_id, language_id])
+}
+
+model Issue {
+  report_id   String   @id
+  location_id String
+  comment     String
+  status      String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  location Location @relation(fields: [location_id], references: [location_id])
+}
