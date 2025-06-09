@@ -55,12 +55,6 @@ export default function FilterPanel({ filters, setFilters }) {
         />
       )}
 
-      {config.language && (
-        <LanguageFilter
-          language={filters.language}
-          onChange={(value) => updateFilter("language", value)}
-        />
-      )}
     </div>
   );
 }
