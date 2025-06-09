@@ -55,7 +55,7 @@ export default function UserAddressPrompt({ address, setAddress }) {
 
   return (
     <div className="space-y-2">
-      <label className="block text-sm font-medium text-gray-700">
+      <label className="block font-semibold mb-2">
         Your Address
       </label>
       <input
