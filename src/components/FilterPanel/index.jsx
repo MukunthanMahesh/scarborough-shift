@@ -1,7 +1,7 @@
 import React from "react";
 import AvailabilityFilter from "./AvailabilityFilter";
 import DistanceFilter from "./DistanceFilter";
-import UserAddressPrompt from "./UserAddressPrompt";
+import UserAddressHolder from "./UserAddressHolder";
 import ServiceTypeSelector from "./ServiceTypeSelector";
 import serviceFilterConfig from "../../config/serviceFilterConfig";
 
@@ -37,7 +37,7 @@ export default function FilterPanel({ filters, setFilters }) {
     <div className="p-4 sm:p-6 md:p-8 space-y-6 max-w-full bg-brand-white rounded-lg shadow-md">
 
       {/* User Address Selector/Prompt */}
-      <UserAddressPrompt
+      <UserAddressHolder
         address={filters.address}
         setAddress={(val) => updateFilter("address", val)}
       />
