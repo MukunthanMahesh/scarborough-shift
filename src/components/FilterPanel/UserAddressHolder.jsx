@@ -1,26 +1,23 @@
-// Controlled address autocomplete with manual Google Places API usage
-// Note: Ensure you have the Google Maps API key set in your environment variables
-
 import React, { useState, useEffect, useRef } from "react";
-import { useJsApiLoader } from "@react-google-maps/api";
 
-const libraries = ["places"];
+// Set your LocationIQ API key in your environment variables
+const LOCATIONIQ_API_KEY = import.meta.env.VITE_LOCATIONIQ_API_KEY;
 
 export default function UserAddressHolder({ setAddress }) {
   const [inputValue, setInputValue] = useState("");
   const [predictions, setPredictions] = useState([]);
   const [selected, setSelected] = useState(null);
-  const autocompleteServiceRef = useRef(null);
-  const placesServiceRef = useRef(null);
   const debounceTimer = useRef(null);
   const wrapperRef = useRef(null);
 
-  // Load Google Maps API with Places library
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: import.meta.env.VITE_GOOGLEMAPS_API_KEY,
-    libraries,
-  });
+  const formatShortAddress = (prediction) => {
+  const addr = prediction.address || {};
+  // Use road or house_number+road for street
+  const street = [addr.house_number, addr.road].filter(Boolean).join(" ") || "";
+  const postcode = addr.postcode || "";
+  // Always use "Scarborough"
+    return [street, "Scarborough", postcode].filter(Boolean).join(", ");
+  };
 
   // Click-away listener to close predictions dropdown
   useEffect(() => {
@@ -33,27 +30,7 @@ export default function UserAddressHolder({ setAddress }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Initialize the AutocompleteService once when API is loaded
-  useEffect(() => {
-    if (isLoaded && !autocompleteServiceRef.current) {
-      autocompleteServiceRef.current = new window.google.maps.places.AutocompleteService();
-    }
-  }, [isLoaded]);
-
-  // Watch for exact match between input and predictions (manual entry of a valid address)
-  useEffect(() => {
-    if (predictions.length === 0) return;
-
-    const exactMatch = predictions.find(
-      (p) => p.description.toLowerCase() === inputValue.trim().toLowerCase()
-    );
-
-    if (exactMatch && selected !== exactMatch.description) {
-      handleSelect(exactMatch);
-    }
-  }, [inputValue, predictions]);
-
-  // Debounced autocomplete prediction fetcher
+  // Debounced autocomplete fetcher using LocationIQ
   useEffect(() => {
     if (inputValue.trim() === "") {
       setPredictions([]);
@@ -62,53 +39,47 @@ export default function UserAddressHolder({ setAddress }) {
 
     clearTimeout(debounceTimer.current);
     debounceTimer.current = setTimeout(() => {
-      autocompleteServiceRef.current.getPlacePredictions(
-        {
-          input: inputValue,
-          componentRestrictions: { country: "ca" },
-        },
-        (results) => {
-          setPredictions(results || []);
-        }
-      );
+      fetch(
+        `https://us1.locationiq.com/v1/autocomplete?key=${LOCATIONIQ_API_KEY}&q=${encodeURIComponent(
+          inputValue
+        )}&countrycodes=ca&limit=5&normalizecity=0&viewbox=-79.304472,43.658056,-79.158417,43.873445&bounded=0`,
+        { method: "GET", headers: { accept: "application/json" } }
+      )
+        .then((res) => res.json())
+        .then((data) => setPredictions(Array.isArray(data) ? data : []))
+        .catch(() => setPredictions([]));
     }, 300);
   }, [inputValue]);
 
+  // Watch for exact match between input and predictions (manual entry of a valid address)
+  useEffect(() => {
+    if (predictions.length === 0) return;
+
+    const exactMatch = predictions.find(
+      (p) =>
+        (p.display_place || p.display_name || "").toLowerCase() ===
+        inputValue.trim().toLowerCase()
+    );
+
+    if (exactMatch && selected !== (exactMatch.display_place || exactMatch.display_name)) {
+      handleSelect(exactMatch);
+    }
+    // eslint-disable-next-line
+  }, [inputValue, predictions]);
+
   // Handle selecting a prediction
   const handleSelect = (prediction) => {
-    setInputValue(prediction.description);
+    const shortLabel = formatShortAddress(prediction);
+    setInputValue(shortLabel);
     setPredictions([]);
-    document.activeElement?.blur(); // Blur the input to indicate selection
+    setSelected(shortLabel);
 
-    // Lazily initialize PlacesService
-    if (!placesServiceRef.current) {
-      const dummyMap = document.createElement("div");
-      placesServiceRef.current = new window.google.maps.places.PlacesService(dummyMap);
-    }
-
-    // Fetch place details from Google
-    placesServiceRef.current.getDetails(
-      {
-        placeId: prediction.place_id,
-        fields: ["formatted_address", "geometry"],
-      },
-      (place) => {
-        if (!place || !place.geometry) return;
-
-        const { lat, lng } = place.geometry.location;
-        const label = place.formatted_address;
-
-        setSelected(label);
-        setAddress({
-          label,
-          latitude: lat(),
-          longitude: lng(),
-        });
-      }
-    );
+    setAddress({
+      label: shortLabel,
+      latitude: parseFloat(prediction.lat),
+      longitude: parseFloat(prediction.lon),
+    });
   };
-
-  if (!isLoaded) return null;
 
   return (
     <div className="space-y-2" ref={wrapperRef}>
@@ -129,14 +100,14 @@ export default function UserAddressHolder({ setAddress }) {
       />
       {/* Autocomplete dropdown */}
       {predictions.length > 0 && (
-        <ul className="bg-white border rounded shadow text-sm">
+        <ul className="bg-brand-white border rounded shadow text-sm">
           {predictions.map((p) => (
             <li
-              key={p.place_id}
-              className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+              key={p.place_id || p.osm_id}
+              className="px-4 py-2 hover:bg-brand-offWhite cursor-pointer"
               onClick={() => handleSelect(p)}
             >
-              {p.description}
+              {formatShortAddress(p)}
             </li>
           ))}
         </ul>
