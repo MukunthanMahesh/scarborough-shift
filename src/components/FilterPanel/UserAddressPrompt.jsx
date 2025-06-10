@@ -18,7 +18,27 @@ export default function UserAddressPrompt({ address, setAddress }) {
             `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
           );
           const data = await res.json();
-          const label = data.display_name;
+
+          const {
+          road,
+          house_number,
+          city,
+          town,
+          suburb,
+          postcode,
+          state,
+        } = data.address;
+
+        // Construct a human-readable address
+        const label = [
+          house_number,
+          road,
+          city || town || suburb,
+          state,
+          postcode,
+        ]
+          .filter(Boolean)
+          .join(", ");
 
           setAddress({ latitude, longitude, label });
           setInputValue(label);
@@ -35,7 +55,7 @@ export default function UserAddressPrompt({ address, setAddress }) {
     if (!value.trim()) return setSuggestions([]);
 
     const res = await fetch(
-      `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(value)}&format=json&addressdetails=1`
+      `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(value)}&format=json&addressdetails=1&viewbox=-79.337,43.825,-79.170,43.755&bounded=1`
     );
     const data = await res.json();
 
