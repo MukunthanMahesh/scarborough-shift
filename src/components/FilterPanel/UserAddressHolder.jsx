@@ -9,6 +9,15 @@ export default function UserAddressHolder({ setAddress }) {
   const [selected, setSelected] = useState(null);
   const debounceTimer = useRef(null);
   const wrapperRef = useRef(null);
+  
+  const formatShortAddress = (prediction) => {
+  const addr = prediction.address || {};
+  // Use road or house_number+road for street
+  const street = [addr.house_number, addr.road].filter(Boolean).join(" ") || "";
+  const postcode = addr.postcode || "";
+  // Always use "Scarborough"
+    return [street, "Scarborough", postcode].filter(Boolean).join(", ");
+  };
 
   // Click-away listener to close predictions dropdown
   useEffect(() => {
@@ -33,7 +42,7 @@ export default function UserAddressHolder({ setAddress }) {
       fetch(
         `https://us1.locationiq.com/v1/autocomplete?key=${LOCATIONIQ_API_KEY}&q=${encodeURIComponent(
           inputValue
-        )}&countrycodes=ca&limit=5&normalizecity=0`,
+        )}&countrycodes=ca&limit=5&normalizecity=0&viewbox=-79.304472,43.658056,-79.158417,43.873445&bounded=1`,
         { method: "GET", headers: { accept: "application/json" } }
       )
         .then((res) => res.json())
@@ -60,13 +69,13 @@ export default function UserAddressHolder({ setAddress }) {
 
   // Handle selecting a prediction
   const handleSelect = (prediction) => {
-    const label = prediction.display_name || prediction.display_place;
-    setInputValue(label);
+    const shortLabel = formatShortAddress(prediction);
+    setInputValue(shortLabel);
     setPredictions([]);
-    setSelected(label);
+    setSelected(shortLabel);
 
     setAddress({
-      label,
+      label: shortLabel,
       latitude: parseFloat(prediction.lat),
       longitude: parseFloat(prediction.lon),
     });
@@ -98,7 +107,7 @@ export default function UserAddressHolder({ setAddress }) {
               className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
               onClick={() => handleSelect(p)}
             >
-              {p.display_name}
+              {formatShortAddress(p)}
             </li>
           ))}
         </ul>
