@@ -9,7 +9,7 @@ export default function UserAddressHolder({ setAddress }) {
   const [selected, setSelected] = useState(null);
   const debounceTimer = useRef(null);
   const wrapperRef = useRef(null);
-  
+
   const formatShortAddress = (prediction) => {
   const addr = prediction.address || {};
   // Use road or house_number+road for street
@@ -42,7 +42,7 @@ export default function UserAddressHolder({ setAddress }) {
       fetch(
         `https://us1.locationiq.com/v1/autocomplete?key=${LOCATIONIQ_API_KEY}&q=${encodeURIComponent(
           inputValue
-        )}&countrycodes=ca&limit=5&normalizecity=0&viewbox=-79.304472,43.658056,-79.158417,43.873445&bounded=1`,
+        )}&countrycodes=ca&limit=5&normalizecity=0&viewbox=-79.304472,43.658056,-79.158417,43.873445&bounded=0`,
         { method: "GET", headers: { accept: "application/json" } }
       )
         .then((res) => res.json())
@@ -100,11 +100,11 @@ export default function UserAddressHolder({ setAddress }) {
       />
       {/* Autocomplete dropdown */}
       {predictions.length > 0 && (
-        <ul className="bg-white border rounded shadow text-sm">
+        <ul className="bg-brand-white border rounded shadow text-sm">
           {predictions.map((p) => (
             <li
               key={p.place_id || p.osm_id}
-              className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+              className="px-4 py-2 hover:bg-brand-offWhite cursor-pointer"
               onClick={() => handleSelect(p)}
             >
               {formatShortAddress(p)}
